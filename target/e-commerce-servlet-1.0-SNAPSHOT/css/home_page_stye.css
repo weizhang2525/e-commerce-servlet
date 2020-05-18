@@ -1,0 +1,187 @@
+/* @include  */
+
+.navbar {
+    padding: 0;
+    background-color: #363062;
+}
+
+/* Screen size specific CSS **************************************************/
+
+/* For Mobile Devides */
+@media (min-width: 0px) {
+    .products {
+        padding-top: 150px;
+    }
+
+    .navbar-brand {
+        padding-left: 55px;
+    }
+
+    .nav-bar-links-container {
+        padding-left: 90px;
+    }
+
+    .product-title {
+        font-size: .80rem;
+    }
+
+    .card-cost {
+        font-size: .70rem;
+    }
+
+    .card-text {
+        font-size: .65rem;
+    }
+}
+
+/* For small screens */
+@media (min-width: 576px) {
+    .product-title {
+        font-size: 1.5rem;
+    }
+
+    .card-cost {
+        font-size: 1.25rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+}
+
+/* For regular size screens */
+@media (min-width: 768px) {
+    .products {
+        padding-top: 100px;
+    }
+
+    .navbar-brand {
+        padding-left: 0px;
+    }
+
+    .nav-bar-links-container {
+        padding-left: 0px;
+    }
+
+    .product-title {
+        font-size: 1.5rem;
+    }
+
+    .card-cost {
+        font-size: 1.25rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+}
+
+/*Background color for nav bar elements **************************************/
+.topnav {
+    background-color:#363062;
+    overflow: hidden;
+    padding: 15px;
+}
+
+/* Nav bar links */
+.topnav a {
+    float: left;
+    color: #d8b9c3;
+    text-align: center;
+    padding: 15px 15px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* Nav bar links hover */
+.topnav a:hover {
+    background-color: #4d4c7d;
+    color: #ebdde1;
+}
+
+/* Nav bar active link */
+.topnav a.active {
+    background-color: #d8b9c3;
+    color: #363062;
+}
+
+/* Card Elements *************************************************************/
+
+.card {
+    background-color:#363062;
+}
+
+.product-card {
+    padding: 25px;
+}
+
+.product-title {
+    color: #f2e4e7;
+}
+
+.card-cost, .card-text {
+    color: #d8b9c3;
+}
+
+body {
+    background: white;
+}
+
+/* Hover Effects *************************************************************/
+
+.product-title:hover {
+    transition: .4s;
+    background-color: #f2e4e7;
+    color: #363062;
+    text-decoration: none;
+}
+
+.card:hover, .img {
+    transform: rotate(10);
+}
+
+.image-container {
+    overflow: hidden;
+}
+
+.image-container img{
+    transition: all .5s ease;
+}
+ 
+.card:hover img{
+    transform: scale(1.05);
+}
+
+.card:before, .card:after {
+    content:"";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background: #b09fc4;
+    transition: 0.5s;
+    z-index:-1;
+}
+
+/* add the effect where new cards appear over hover */
+.card:hover:before {
+    transform: rotate(5deg);
+    box-shadow: 0 2px 20px rgba(0,0,0,.2);
+}
+
+.card:hover:after {
+    transform: rotate(2.5deg);
+    box-shadow: 0 2px 20px rgba(0,0,0,.2);
+}
+
+
+
+
+
+
+
+
+
+

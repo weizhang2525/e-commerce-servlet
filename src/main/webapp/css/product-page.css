@@ -1,0 +1,81 @@
+.navbar {
+    padding: 0;
+    background-color: #363062;
+}
+
+/*Background color for nav bar elements **************************************/
+.topnav {
+    background-color:#363062;
+    overflow: hidden;
+    padding: 15px;
+}
+
+/* Nav bar links */
+.topnav a {
+    float: left;
+    color: #d8b9c3;
+    text-align: center;
+    padding: 15px 15px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* Nav bar links hover */
+.topnav a:hover {
+    background-color: #4d4c7d;
+    color: #ebdde1;
+}
+
+/* Nav bar active link */
+.topnav a.active {
+    background-color: #d8b9c3;
+    color: #363062;
+}
+
+.Product{
+    margin-top: 100px;
+    margin-left:100px;
+}
+
+.col-md-7 h2{
+    color: hsl(247, 34%, 29%);
+    align-items: center;
+}
+
+.product-disciption{
+    font-size: 8px;
+}
+
+.rating{
+    height: 60px;
+    
+}
+
+.price{
+    color:#363062;
+    font-size:26px;
+    font-weight: bold;
+    padding-top:20px;
+}
+
+.input{
+    border: 5px;
+    font-weight: bold;
+    height:33px;
+    text-align: center;
+    background-color: #f2e4e7;
+    
+
+}
+
+.cart{
+    background:orange;
+    color: black;
+    font-size: 15px;
+    margin-left:20px;
+}
+
+.form{
+    margin-top: 50px;
+}
+
