@@ -9,6 +9,7 @@
  * @author weizhang
  */
 public class Product {
+
     private String pid;
     private double price;
     private String name;
@@ -23,7 +24,7 @@ public class Product {
         return this.pid;
     }
     
-    public float getPrice(){
+    public double getPrice(){
         return this.price;
     }
     
