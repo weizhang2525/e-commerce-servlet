@@ -13,12 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;  
+import java.util.Iterator;
 
 /**
  *
@@ -90,16 +86,30 @@ public class FormSubmission extends HttpServlet {
         
         while(paraNames.hasMoreElements()){
            String paramName = (String)paraNames.nextElement();
-           out.println(paramName);
+//           if(paramName.equals(out))
            String paramValues = request.getParameterValues(paramName)[0];
            
-           out.println(paramValues);
+//           out.println(paramValues);
            
            formData.put(paramName, paramValues);
         }
         
+        //connect to the server
+        Connection connection = startServer(response);
         
+//        out.println(formData.get("fname")+ formData.get("lname")+ formData.get("email")+ formData.get("phone")+ formData.get("address1")+ formData.get("city")+formData.get("state")+ formData.get("zip"));
         
+        int cid = insertCustomer(formData.get("fname"), formData.get("lname"), formData.get("email"), formData.get("phone"), formData.get("address1"), formData.get("city"), formData.get("state"), formData.get("zip"), connection);
+        out.println(cid);
+      
+        
+//        Iterator formIterator = formData.entrySet().iterator();
+//        
+//        while(formIterator.hasNext()){
+//            Map.Entry data = (Map.Entry)formIterator.next();
+//            out.println(data.getKey());
+//        }
+       
         
     }
 
@@ -114,22 +124,17 @@ public class FormSubmission extends HttpServlet {
     }// </editor-fold>
     
     
-    public Connection startServer(){
-        try{
-        Class.forName("org.gjt.mm.mysql.Driver");
-        }
-        catch( ClassNotFoundException e){
-            
-        }
+    public Connection startServer(HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter(); 
         
         Connection con = null;
         
         try{
-            con = DriverManager.getConnection("mysql://localhost:8080/Nuance9/", "user", "test123");
-            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Nuance9?useSSL=false&serverTimezone=PST", "user", "test123");
         }
-        catch (SQLException e){
-            
+        catch (Exception e){
+            out.println(e);
         }
        
         return con;
@@ -151,6 +156,7 @@ public class FormSubmission extends HttpServlet {
         }
         catch(SQLException e){
             System.out.println("Error while inserting into order table");
+            System.out.println(e.getMessage());
         }
     }
     
@@ -179,9 +185,12 @@ public class FormSubmission extends HttpServlet {
 
         }
         catch(SQLException e){
-            System.out.println("Error while inserting into credit card table");
+            System.out.println("Error while inserting into customer table");
+            System.out.println(e.getMessage());
         }
+        
         return cid;
+       
     }
     
     public void insertCC(int cid, String ccnum, String cvv, String expiration, Connection con){
