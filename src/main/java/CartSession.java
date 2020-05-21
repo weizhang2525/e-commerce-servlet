@@ -75,9 +75,8 @@ public class CartSession extends HttpServlet {
             throws ServletException, IOException {
 //        processRequest(request, response);
         PrintWriter out = response.getWriter();
-//        out.println(request.getParameter("quantity"));
-        out.println(request.getParameter("pid"));
-        out.println(request.getParameter("price"));
+//        out.println(request.getParameter("pid"));
+//        out.println(request.getParameter("price"));
         if(request.getParameter("actionType").equals("addToCart")){
 //            out.println("hi");
 //            String name = request.getParameter("name");
@@ -91,8 +90,8 @@ public class CartSession extends HttpServlet {
         else{
             out.println("hmm");
         }
-//        HttpSession session = request.getSession();
-//        out.println(session.getAttribute("cart"));
+        HttpSession session = request.getSession();
+        out.println(session.getAttribute("cart"));
         out.println();
         
         
@@ -113,37 +112,49 @@ public class CartSession extends HttpServlet {
     public void addToCart(HttpServletRequest request, HttpServletResponse response, Product product, int quantity) throws IOException{
         //cart data struction: hashmap
         //Cart: {Product: Quantity}
+        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         if(session.getAttribute("cart") == null){
             Map<Product, Integer> cart = new HashMap<Product, Integer>();
             cart.put(product, quantity);
             session.setAttribute("cart", cart);
-            
         }
         else{
             Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
-            if(isProductInCart(product, cart)){
-                int updatedQuantity = Integer.valueOf(cart.get(product));
-                updatedQuantity += quantity;
-                cart.replace(product, updatedQuantity);
-            }      
-            else{
-                cart.put(product, quantity);
-            }
+//            Iterator cartIterator = cart.entrySet().iterator();
+//            while(cartIterator.hasNext()){
+//                Map.Entry data = (Map.Entry)cartIterator.next();
+//                out.println(data.getKey());
+//                Product p = (Product)data.getKey();
+//                out.println(p.getPid().equals(product.getPid()));
+//                out.println(data.getValue());
+//            }
+            isProductInCart(product, cart, quantity, request, response );                
         }
-        out.println(session.getAttribute("cart"));
     }
     
-    public boolean isProductInCart(Product product, Map<Product, Integer> cart){
+    //adds product to cart if does not exist, update if it does
+    public void isProductInCart(Product product, Map<Product, Integer> cart, int quantity, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        HttpSession session = request.getSession();
+        boolean inCart = false;
+        PrintWriter out = response.getWriter();
         Iterator cartIterator = cart.entrySet().iterator();
         while(cartIterator.hasNext()){
                 Map.Entry data = (Map.Entry)cartIterator.next();
                 Product p = (Product)data.getKey();
-                if(p.getPid() == product.getPid()){
-                    return true;
+                if(p.getPid().equals(product.getPid())){
+                    int updatedQuantity = Integer.valueOf(cart.get(p));
+                    inCart = true;
+                    updatedQuantity += quantity;
+                    cart.replace(p, updatedQuantity);
+                    out.println(Integer.valueOf(cart.get(p)));
+                    session.setAttribute("cart", cart);
                 }
          }
-        return false;
+        if(!inCart){
+            cart.put(product, quantity);
+            session.setAttribute("cart", cart);
+        }
     }
 
 }
