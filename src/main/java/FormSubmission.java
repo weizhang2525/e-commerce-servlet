@@ -97,10 +97,11 @@ public class FormSubmission extends HttpServlet {
         //connect to the server
         Connection connection = startServer(response);
         
-//        out.println(formData.get("fname")+ formData.get("lname")+ formData.get("email")+ formData.get("phone")+ formData.get("address1")+ formData.get("city")+formData.get("state")+ formData.get("zip"));
         
         int cid = insertCustomer(formData.get("fname"), formData.get("lname"), formData.get("email"), formData.get("phone"), formData.get("address1"), formData.get("city"), formData.get("state"), formData.get("zip"), connection);
         out.println(cid);
+        
+        insertCC(cid, formData.get("ccnum"), formData.get("cvv"), formData.get("expiration"), connection);
       
         
 //        Iterator formIterator = formData.entrySet().iterator();

@@ -6,16 +6,19 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author weizhang
  */
-public class CheckoutFOrm extends HttpServlet {
+public class CartSession extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +37,10 @@ public class CheckoutFOrm extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckoutFOrm</title>");            
+            out.println("<title>Servlet CartSession</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckoutFOrm at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CartSession at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,6 +73,7 @@ public class CheckoutFOrm extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**
@@ -81,5 +85,20 @@ public class CheckoutFOrm extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    
+    //reference: http://learningprogramming.net/java/jsp-servlet/shopping-cart-with-session-in-jsp-servlet/
+    public void addToCart(HttpServletRequest request, HttpServletResponse response){
+        //cart data struction: hashmap
+        //Cart: {Product: Quantity}
+        HttpSession session = request.getSession();
+        if(session.getAttribute("cart") == null){
+            Map<Product, Integer> cart = new HashMap<Product, Integer>();
+            session.setAttribute("cart", cart);
+        }
+        else{
+            Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
+        }
+    }
 
 }
