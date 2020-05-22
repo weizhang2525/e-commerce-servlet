@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -59,7 +61,23 @@ public class CartSession extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
+        PrintWriter out = response.getWriter();
+        JSONArray cartJson = new JSONArray();
+        Iterator cartIterator = cart.entrySet().iterator();
+        while(cartIterator.hasNext()){
+                Map.Entry data = (Map.Entry)cartIterator.next();
+                Product p = (Product)data.getKey();
+                JSONObject item = new JSONObject();
+                item.put("productID", p.getPid());
+                item.put("price", p.getPrice());
+                item.put("name", p.getName());
+                item.put("quantity", cart.get(p));
+                cartJson.put(item);
+         }
+//        out.println(cart);
+        out.println(cartJson);
     }
 
     /**
@@ -73,12 +91,8 @@ public class CartSession extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
         PrintWriter out = response.getWriter();
-//        out.println(request.getParameter("pid"));
-//        out.println(request.getParameter("price"));
         if(request.getParameter("actionType").equals("addToCart")){
-//            out.println("hi");
 //            String name = request.getParameter("name");
 //            String pid = request.getParameter("pid");
 //            double price = Double.valueOf(request.getParameter("price"));
@@ -87,13 +101,7 @@ public class CartSession extends HttpServlet {
 ////            Product p = new Product(pid, price, name);
             addToCart(request, response, p1, quantity);
         }
-        else{
-            out.println("hmm");
-        }
-        HttpSession session = request.getSession();
-        out.println(session.getAttribute("cart"));
-        out.println();
-        
+//        HttpSession session = request.getSession();        
         
     }
 
@@ -112,7 +120,6 @@ public class CartSession extends HttpServlet {
     public void addToCart(HttpServletRequest request, HttpServletResponse response, Product product, int quantity) throws IOException{
         //cart data struction: hashmap
         //Cart: {Product: Quantity}
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         if(session.getAttribute("cart") == null){
             Map<Product, Integer> cart = new HashMap<Product, Integer>();
@@ -120,28 +127,21 @@ public class CartSession extends HttpServlet {
             session.setAttribute("cart", cart);
         }
         else{
-            Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
-//            Iterator cartIterator = cart.entrySet().iterator();
-//            while(cartIterator.hasNext()){
-//                Map.Entry data = (Map.Entry)cartIterator.next();
-//                out.println(data.getKey());
-//                Product p = (Product)data.getKey();
-//                out.println(p.getPid().equals(product.getPid()));
-//                out.println(data.getValue());
-//            }
-            isProductInCart(product, cart, quantity, request, response );                
+            isProductInCart(product, quantity, request, response );                
         }
     }
     
     //adds product to cart if does not exist, update if it does
-    public void isProductInCart(Product product, Map<Product, Integer> cart, int quantity, HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public void isProductInCart(Product product, int quantity, HttpServletRequest request, HttpServletResponse response) throws IOException{
         HttpSession session = request.getSession();
+        Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
         boolean inCart = false;
         PrintWriter out = response.getWriter();
         Iterator cartIterator = cart.entrySet().iterator();
         while(cartIterator.hasNext()){
                 Map.Entry data = (Map.Entry)cartIterator.next();
                 Product p = (Product)data.getKey();
+                out.println(p.getPid());
                 if(p.getPid().equals(product.getPid())){
                     int updatedQuantity = Integer.valueOf(cart.get(p));
                     inCart = true;
@@ -155,6 +155,10 @@ public class CartSession extends HttpServlet {
             cart.put(product, quantity);
             session.setAttribute("cart", cart);
         }
+    }
+    
+    public void viewCart(HttpServletResponse response){
+        
     }
 
 }
