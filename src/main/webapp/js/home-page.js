@@ -202,9 +202,12 @@ window.onload = function() {
         DOM_products_contaner.appendChild(new_product_container)
     }
 
+
+
 function passValue(product){
     console.log(product)
     localStorage.setItem("textvalue",product);
+    console.log(product)
     return false;
     // console.log(product)
 }

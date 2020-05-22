@@ -141,6 +141,9 @@ var product = localStorage.getItem("textvalue")
 product = product.trim()
 
 
+// GO INTO HPDO.PHP and return the array into this page
+
+
 var name = ""
 var price = ""
 var description = ""
@@ -150,22 +153,40 @@ var srcThree = ""
 var src = ""
 var pid = ""
 
-window.onload = function() {
-    
-    updateVariables();
-    // logInfo();
-    updatePage();
+var stateSet = false
+var zipSet = false
 
+window.onload = function() {
+
+    // this.phpArray = "<?php php_func();?>";
+    
+    // console.log(this.phpArray)
+    
+    console.log(this.product);
+    createCookie("gfg",this.product,10);
+    // Unlock bottom
+    // updateVariables();
+
+    // logInfo();
+
+    // Unlock bottom
+    // updatePage();
+
+    ajaxUpdateTaxAmmount();
 };
 
+function createCookie(name, value,days){
+    var expires;
 
+    console.log(value);
+    document.cookie = escape(name)+"="+escape(value)
+
+}
 function updateVariables(){
 //intializes the information
+    
     for(var i=0;i<product_list.length; i++) {
-        
         if (this.product === product_list[i].name){
-
-            
             this.name = product_list[i].name;
             this.price = product_list[i].price;
             this.description = product_list[i].description;
@@ -178,13 +199,6 @@ function updateVariables(){
     }
 }
 
-
-function logInfo(){
-    console.log(this.name)
-    console.log(this.price)
-    console.log(this.description)
-}
-
 function updatePage(){
     var name = document.getElementById("name");
     var description = document.getElementById("description");
@@ -193,8 +207,6 @@ function updatePage(){
     var secondImage = document.getElementById("second-image")
     var thirdImage = document.getElementById("third-image")
     var id = document.getElementById("pid")
-
-    
     name.textContent = this.name;
     description.textContent = this.description;
     price.textContent = this.price;
@@ -202,15 +214,76 @@ function updatePage(){
     secondImage.src = this.srcTwo
     thirdImage.src = this.srcThree
     id.textContent = "Product ID: " + this.pid;
-
-
 }
 
-function addToCart(){
-    document.OrderForm.pid.value = this.pid;
-    document.OrderForm.quantity.value = 1;
-    
+function ajaxUpdateTaxAmmount() {
+    var stateField = document.getElementById("state");
+    var zipField = document.getElementById("zip");
+
+    stateField.addEventListener('change', (event) =>{
+        const state = this.document.getElementById("state").value;
+        if (state != "") {
+            stateSet = true;
+        } else {
+            stateSet = false;
+        }
+
+        if (stateSet && zipSet) {
+            updateTaxRateInDOM();
+        }
+    });
+
+    zipField.addEventListener('change', (event) =>{
+        const zip = this.document.getElementById("zip").value;
+
+        if (zip && zip.length == 5) {
+            zipSet = true;
+        } else {
+            zipSet = false;
+        }
+
+        if (stateSet && zipSet) {
+            updateTaxRateInDOM();
+        } 
+    });
 }
+
+
+async function updateTaxRateInDOM() {
+    const state = this.document.getElementById("state").value;
+    const zip = this.document.getElementById("zip").value;
+
+    const file = await fetch('./data/tax_rates.csv');
+    const data = await file.text();
+    const rows = data.split('\n')
+
+    var taxRate = "";
+    rows.forEach(entry => {
+        const row = entry.split(',');
+        const s = row[0];
+        const z = row[1];
+        if (z == zip && s == state) {
+            taxRate = row[3];
+        }
+
+    })
+
+    const price = document.getElementById("price").textContent.replace("$", "");
+    var taxRateNumber = Number(taxRate);
+    var producePriceNumber = Number(price);
+    var taxAmmount = (taxRateNumber * producePriceNumber)
+    var taxAmmountFormatted = "+ $" + taxAmmount.toFixed(2)
+
+    tax = document.getElementById("tax");
+    tax.textContent = taxAmmountFormatted;
+}
+
+
+
+// function addToCart(){
+//     document.OrderForm.pid.value = this.pid;
+//     document.OrderForm.quantity.value = 1; 
+// }
 
 
 

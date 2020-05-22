@@ -53,12 +53,13 @@ async function submitForm(form){
     }
 
     //check for stress address
-    var address1 = document.OrderForm.address1.value;
-    const address1_re = /^\s*\S+(?:\s+\S+){2}$/;
-    if(!(address1_re.test(address1))){
-        invalidInput = true;
-        alertMsg += "Bad input for street address \n"
-    }
+    // var address1 = document.OrderForm.address1.value;
+    // const address1_re = /^\s*\S+(?:\s+\S+){2}$/;
+    // console.log(address1)
+    // if(!(address1_re.test(address1))){
+    //     invalidInput = true;
+    //     alertMsg += "Bad input for street address \n"
+    // }
 
 
     // checks if state city and zip match an entry in csv file

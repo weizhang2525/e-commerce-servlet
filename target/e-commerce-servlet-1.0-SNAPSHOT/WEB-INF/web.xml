@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <servlet>
-        <servlet-name>CheckoutFOrm</servlet-name>
-        <servlet-class>CheckoutFOrm</servlet-class>
+        <servlet-name>FormSubmission</servlet-name>
+        <servlet-class>FormSubmission</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartSession</servlet-name>
+        <servlet-class>CartSession</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CheckoutFOrm</servlet-name>
-        <url-pattern>/CheckoutFOrm</url-pattern>
+        <servlet-name>FormSubmission</servlet-name>
+        <url-pattern>/FormSubmission</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartSession</servlet-name>
+        <url-pattern>/CartSession</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
