@@ -7,7 +7,126 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="css/home_page_stye.css">
-    <script src="js/home-page.js"></script>
+    <!-- <script src="js/home-page.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            console.log("TEST 0 - LOADED")
+
+            $.get("HomePageSession", function(data){
+                console.log("TEST 1 - START -----------------------------------");
+
+                var productListJSON = JSON.parse(data);
+                generateProductCards(productListJSON);
+
+                console.log("TEST 2 - END -------------------------------------");
+            });
+
+            function generateProductCards(productListJSON) {
+                DOM_products_contaner = document.getElementById("products-container")
+
+                for (var i = 0; i < productListJSON.length; i++) {
+                    var product = productListJSON[i];
+                    // this.console.log(product)
+
+                    // Create the product card container with column formatting
+                    new_product_container = this.document.createElement("div")
+                    new_product_container.classList.add("col-lg-6")
+                    new_product_container.classList.add("col-md-6")
+                    new_product_container.classList.add("col-sm-6")
+                    new_product_container.classList.add("col-6")
+
+                    // new_product_container.classList.add("mb-6")
+                    new_product_container.classList.add("product-card")
+
+                    // Create the product card
+                    new_product_card = this.document.createElement("div")
+                    new_product_card = this.document.createElement("a")
+                    new_product_card.classList.add("card")
+                    new_product_card.classList.add("h-100")
+                    // new_product_card.href = "product-page.html";
+                    new_product_card.onclick = function(e) {
+                        $.get("HomePageSession", function(data){
+                console.log("TEST 1 - START -----------------------------------");
+
+
+                console.log("TEST 2 - END -------------------------------------");
+                        });
+                        // var path = e.path[2];
+                        // var title = document.getElementByClass(e)
+                        // var productInfo = e.target.offsetParent.innerText
+                        // var productName = productInfo.split("$")
+                        // passValue(productName[0])
+                    }
+
+                    // Create the image container for this product
+                    image_container = this.document.createElement("a")
+                    image_container.classList.add("image-container")
+                    img = this.document.createElement("img")
+                    img.classList.add("card-img-top")
+                    img.src = product.srcOne;
+                    img.alt = product.alt;
+                    // image_container.href = "#";
+                    // image_container.onclick=function(e){
+                    //     console.log(e)
+                        // var product = e.toElement.text;
+                        // passValue(product)
+                    // }
+
+                    // Card body
+                    card_body = this.document.createElement("div")
+                    card_body.classList.add("card-body")
+
+                    // Card title
+                    card_title = this.document.createElement("h4");
+                    card_title.classList.add("card-title");
+
+                    // Product title clickable a
+                    card_title_a = this.document.createElement("a")
+                    card_title_a.classList.add("product-title")
+                    card_title_a.innerHTML = product.pname
+                    // card_title_a.href = "product-page.html";
+                    card_title_a.onclick=function(e){
+                        // console.log(e.toElement.text)
+                        var product = e.toElement.text;
+                        passValue(product)
+                    }
+                    
+
+
+                    // Price
+                    card_cost = this.document.createElement("h5")
+                    card_cost.classList.add("card-cost")
+                    card_cost.innerHTML = product.price
+
+                    // Card text
+                    card_text = this.document.createElement("p");
+                    card_text.classList.add("card-text")
+                    card_text.innerHTML = product.desc
+
+
+                    // Add everything together
+                    image_container.appendChild(img)
+                    card_title.appendChild(card_title_a)
+
+                    card_body.appendChild(card_title)
+                    card_body.appendChild(card_cost)
+                    card_body.appendChild(card_text)
+                    new_product_card.appendChild(image_container)
+                    new_product_card.appendChild(card_body)
+                    new_product_container.appendChild(new_product_card)
+
+                    // Now add it to the DOM
+                    DOM_products_contaner.appendChild(new_product_container)
+                }
+            }
+
+
+
+        });
+    </script>
 </head>
 
 <body>
@@ -22,6 +141,9 @@
                 <div class="topnav" id="nav-bar-tabs">
                     <a href="index.html">Apparel</a>
                     <a href="about.html">About</a>
+                    <!-- <form action="HomePageSession" method="POST">
+                        <button type="submit"id="testButton"></button>
+                    </form> -->
                 </div>
             </div>
 
