@@ -11,57 +11,21 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel= "stylesheet" href = "css/checkout-page.css">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src = "js/form.js"></script>
 
-<!--        <script>
-        $(document).ready(function() {
-            $("form").submit(function(event) {
-                event.preventDefault();
-                var fname = $('#fname').val();
-                var lname = $('#lname').val();
-                var email = $('#email').val();
-                var phone = $('#phone').val();
-                var address1 = $('#address1').val();
-                var city = $('#city').val();
-                var state = $('#state').val();
-                var zip = $('#zip').val();
-                var ccnum = $('#ccnum').val();
-                var expiration = $('#expiration').val();
-                var cvv = $('#cvv').val();
-                var submit = $('#submit').val();
-//                var pid = $('#productid').val();
-//                var quantity = $('#quantity').val();
-                var shipping = $("input[name='shipping']:checked").val();
-                $('.error-message').load("php/form_validation.php", {
-
-                    fname: fname,
-                    lname: lname,
-                    email: email,
-                    phone: phone,
-                    address1: address1,
-                    city: city,
-                    state: state,
-                    zip: zip,
-                    ccnum: ccnum,
-                    expiration: expiration,
-                    cvv: cvv,
-                    submit: submit,
-//                    pid: pid,
-//                    quantity: quantity,
-                    shipping: shipping
-                });
-            });
-        });
-    </script>-->
 
     <script>
         $(document).ready(function(){
             $.get("CartSession", function(data){
                 var cartUI = $("#cart");
                 var productJSON = JSON.parse(data);
+                var total = 0;
                 for(var i = 0; i < productJSON.length; i++){
 //                    console.log(productJSON[i]);
-                    cartUI.append("<p>ProductID: "+ productJSON[i].productID+ " Name: "+ productJSON[i].name + " Price: "+ productJSON[i].price+ " Qty: "+ productJSON[i].quantity + "</p>");
+                    cartUI.append("<p>ProductID: "+ productJSON[i].productID+ " Name: "+ productJSON[i].name + " Price: "+ productJSON[i].price + " Qty: "+ productJSON[i].quantity + "</p>");
+                    total += productJSON[i].price*productJSON[i].quantity;
                 }
+                cartUI.append("<p class = 'total'>Total: $" + total + "</p>")
             });
         });
     </script>
@@ -70,7 +34,7 @@ and open the template in the editor.
     <body>
         <div class = "row">
             <div class = "col-md-7">
-                <form class = "container form" method = "POST" action = "FormSubmission">
+                <form class = "container form"  method = "POST" action = "FormSubmission" >
                     <h3>Order Form</h3>
                     <div class = "form-row">
                         <div class="form-group col-md-6">
@@ -176,7 +140,7 @@ and open the template in the editor.
                 <div class = "container" id = "cart">
                     <h4>Cart</h4>
                     
-                    <p class = "total">Total:</p>
+                    
                 </div>
             </div>
         </div>

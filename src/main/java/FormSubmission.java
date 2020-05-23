@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;  
 import java.util.Iterator;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -99,11 +100,10 @@ public class FormSubmission extends HttpServlet {
         
         
         int cid = insertCustomer(formData.get("fname"), formData.get("lname"), formData.get("email"), formData.get("phone"), formData.get("address1"), formData.get("city"), formData.get("state"), formData.get("zip"), connection);
-        out.println(cid);
-        
+//        out.println(cid);
+//        
         insertCC(cid, formData.get("ccnum"), formData.get("cvv"), formData.get("expiration"), connection);
-      
-        
+
 //        Iterator formIterator = formData.entrySet().iterator();
 //        
 //        while(formIterator.hasNext()){
@@ -111,6 +111,18 @@ public class FormSubmission extends HttpServlet {
 //            out.println(data.getKey());
 //        }
        
+        HttpSession session = request.getSession();
+        Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
+        Iterator cartIterator = cart.entrySet().iterator();
+        java.util.Date dt = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(dt);
+        while(cartIterator.hasNext()){
+                Map.Entry data = (Map.Entry)cartIterator.next();
+                Product p = (Product)data.getKey();
+                int quantity = cart.get(p);
+                insertOrder(cid, formData.get("ccnum"), p.getPid(), quantity, p.getPrice()*quantity, currentTime, connection);
+        }
         
     }
 
@@ -141,15 +153,16 @@ public class FormSubmission extends HttpServlet {
         return con;
     }
     
-    public void insertOrder(int cid, String ccnum, String pid, int quantity, float total, Connection con){
-        String sql = "INSERT INTO orders (cid, ccnum, pid, quantity, order_date, total) VALUES (?, ?, ?, ?, NOW(), ?)";
+    public void insertOrder(int cid, String ccnum, String pid, int quantity, double total, String currentTime, Connection con){
+        String sql = "INSERT INTO orders (cid, ccnum, pid, quantity, order_date, total) VALUES (?, ?, ?, ?, ?, ?)";
         try{
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, cid);
             preparedStatement.setString(2, ccnum);
             preparedStatement.setString(3, pid);
             preparedStatement.setInt(4, quantity);
-            preparedStatement.setFloat(6, total);
+            preparedStatement.setString(5, currentTime);
+            preparedStatement.setDouble(6, total);
             preparedStatement.executeUpdate();
             
              //close all connections

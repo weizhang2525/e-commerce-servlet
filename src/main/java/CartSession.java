@@ -101,7 +101,8 @@ public class CartSession extends HttpServlet {
 ////            Product p = new Product(pid, price, name);
             addToCart(request, response, p1, quantity);
         }
-//        HttpSession session = request.getSession();        
+        HttpSession session = request.getSession();        
+        
         
     }
 
@@ -125,10 +126,12 @@ public class CartSession extends HttpServlet {
             Map<Product, Integer> cart = new HashMap<Product, Integer>();
             cart.put(product, quantity);
             session.setAttribute("cart", cart);
+            session.setAttribute("cartTotal", product.getPrice()*quantity);
         }
         else{
             isProductInCart(product, quantity, request, response );                
         }
+        
     }
     
     //adds product to cart if does not exist, update if it does
@@ -136,25 +139,29 @@ public class CartSession extends HttpServlet {
         HttpSession session = request.getSession();
         Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
         boolean inCart = false;
+        double total = 0;
         PrintWriter out = response.getWriter();
         Iterator cartIterator = cart.entrySet().iterator();
         while(cartIterator.hasNext()){
                 Map.Entry data = (Map.Entry)cartIterator.next();
                 Product p = (Product)data.getKey();
-                out.println(p.getPid());
+//                out.println(p.getPid());
                 if(p.getPid().equals(product.getPid())){
                     int updatedQuantity = Integer.valueOf(cart.get(p));
                     inCart = true;
                     updatedQuantity += quantity;
                     cart.replace(p, updatedQuantity);
-                    out.println(Integer.valueOf(cart.get(p)));
+//                    out.println(Integer.valueOf(cart.get(p)));
+                    
                     session.setAttribute("cart", cart);
                 }
+                total += p.getPrice()*cart.get(p);                
          }
         if(!inCart){
             cart.put(product, quantity);
             session.setAttribute("cart", cart);
         }
+        session.setAttribute("cartTotal", total);
     }
     
     public void viewCart(HttpServletResponse response){
