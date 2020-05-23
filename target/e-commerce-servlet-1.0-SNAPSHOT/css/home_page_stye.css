@@ -119,6 +119,10 @@
     color: #f2e4e7;
 }
 
+.product-title-test {
+    color: #f2e4e7;
+}
+
 .card-cost, .card-text {
     color: #d8b9c3;
 }
@@ -177,11 +181,9 @@ body {
 }
 
 
+/* Recently Seen *************************************************************/
 
 
-
-
-
-
-
-
+.recently-visited-title {
+    text-align: center;
+}

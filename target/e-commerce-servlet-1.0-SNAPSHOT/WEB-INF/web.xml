@@ -9,8 +9,12 @@
         <servlet-class>CartSession</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>HomePageSession</servlet-name>
-        <servlet-class>HomePageSession</servlet-class>
+        <servlet-name>HomePageServlet</servlet-name>
+        <servlet-class>HomePageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserSessionTrackingServlet</servlet-name>
+        <servlet-class>UserSessionTrackingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FormSubmission</servlet-name>
@@ -21,8 +25,12 @@
         <url-pattern>/CartSession</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>HomePageSession</servlet-name>
-        <url-pattern>/HomePageSession</url-pattern>
+        <servlet-name>HomePageServlet</servlet-name>
+        <url-pattern>/HomePageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserSessionTrackingServlet</servlet-name>
+        <url-pattern>/UserSessionTrackingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
