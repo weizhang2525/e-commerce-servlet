@@ -10,43 +10,8 @@
     <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/product-info.js"></script>
-    <script src = "js/form.js"></script>
     <script>
         $(document).ready(function() {
-            
-            
-            $.get("productPage", function(data){
-                console.log(data);
-                
-                
-                var array = data.split("@");
-                console.log("ARRAY");
-                console.log(array);
-                
-                var pid = array[0];
-                var subpid = pid.substring(0, 3);
-                var pname = array[1];
-                var price = array[2];
-                var dec = array[3];
-                var quantity = array[4];
-                var srcOne = array[5];
-                var srcTwo = array[6];
-                var srcThree = array[7];
-                var alt = array[8];
-                
-                $('#pid').text("Product ID: " + subpid);
-                $('#name').text(pname);
-                $('#price').text(price);
-                $('#descr').text(dec);
-                $('#first-image').attr("src", srcOne);
-                $('#second-image').attr("src", srcTwo);
-                $('#third-image').attr("src", srcThree);
-                
-                
-         
-            });
-            
-            
             $("#addToCart").click(function() {                
                     var pid = $('#pid').val();
                     var quantity = $('#quantity option:selected').text();
@@ -131,7 +96,7 @@
             <div class="col-md-7">
                 <h2 id="name"></h2>
                 <p id="prd-color"></p>
-                <p id="descr"></p>
+                <p id="description"></p>
                 <img src ="assets/5-star-png-12.png" class="rating">
                 <p id = "pid"></p>
                 <p class="price" id="price"></p>
