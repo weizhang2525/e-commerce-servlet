@@ -25,13 +25,28 @@
             // APON PUT YOUR CODE HERE
             function handleCardClick() {
                 var pid = this.classList[0]
+                console.log(pid);
+//                $.ajax({
+//                type: 'POST',
+//                data: { pid: pid },
+//                url: 'UserSessionTrackingServlet',
+//                success: function(data){},
+//                error: function(){ alert("Error"); }
+//                });
+                
                 $.ajax({
                 type: 'POST',
-                data: { pid: pid },
-                url: 'UserSessionTrackingServlet',
-                success: function(data){},
+                data: { prod: pid },
+                url: 'productPage',
+                success: function(data){
+                    console.log(data);
+                },
                 error: function(){ alert("Error"); }
                 });
+                
+//                window.location.replace("product-page.html");
+                window.location.href = "product-page.html";
+                
             }
 
             function generateProductCards(productListJSON, container) {
@@ -133,11 +148,18 @@
     </nav>
 
     <!-- Shop Content  -->
+    
+            
     <div class="container">
+        
+              
 
         <div class="row">
         <div class="col-lg-12 sm-p-100 products">
             <div class="row" id="products-container">
+                
+                
+            
 
         <!-- [DON'T DELETE THIS, ITS A REFERNCE] ------------------
     

@@ -65,7 +65,7 @@ public class HomePageServlet extends HttpServlet {
 
             // 1. Get a connectiong to database
             // out.println("TEST S - 3");
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Nuance9?autoReconnect=true&useSSL=false", "test", "test");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Nuance9?useSSL=false&serverTimezone=PST", "test", "test");
 
             // 2. Create a statement3
             // out.println("TEST S - 4");
