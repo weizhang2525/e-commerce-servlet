@@ -48,10 +48,10 @@
             
             
             $("#addToCart").click(function() {                
-                    var pid = $('#pid').val();
+                    var pid = $('#pid').text();
                     var quantity = $('#quantity option:selected').text();
-                    var name = $("#name").val();
-                    var price = $("#price").val();
+                    var name = $("#name").text();
+                    var price = $("#price").text();
                     $.ajax({
                     type: 'POST',
                     data: {
@@ -63,7 +63,7 @@
                     },
                     url: 'CartSession',
                     success: function(data){
-//                        $("#result").html(data);
+                        console.log(data);
                         alert("Item added to cart");
                     },
                     error: function(){

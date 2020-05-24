@@ -26,13 +26,13 @@
             function handleCardClick() {
                 var pid = this.classList[0]
                 console.log(pid);
-//                $.ajax({
-//                type: 'POST',
-//                data: { pid: pid },
-//                url: 'UserSessionTrackingServlet',
-//                success: function(data){},
-//                error: function(){ alert("Error"); }
-//                });
+                $.ajax({
+                type: 'POST',
+                data: { pid: pid },
+                url: 'UserSessionTrackingServlet',
+                success: function(data){},
+                error: function(){ alert("Error"); }
+                });
                 
                 $.ajax({
                 type: 'POST',

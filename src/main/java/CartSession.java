@@ -93,13 +93,14 @@ public class CartSession extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         if(request.getParameter("actionType").equals("addToCart")){
-//            String name = request.getParameter("name");
-//            String pid = request.getParameter("pid");
-//            double price = Double.valueOf(request.getParameter("price"));
+            String name = request.getParameter("name");
+            String pid = request.getParameter("pid").substring(12);
+            Double price = Double.valueOf(request.getParameter("price").substring(1));
+            out.println(price);
             int quantity = Integer.valueOf(request.getParameter("quantity"));
-            Product p1 = new Product("1A", 12.50, "Hello");
-//            Product p = new Product(pid, price, name);
-            addToCart(request, response, p1, quantity);
+//            Product p1 = new Product("1A", 12.50, "Hello");
+            Product p = new Product(pid, price, name);
+            addToCart(request, response, p, quantity);
         }
         HttpSession session = request.getSession();        
         
