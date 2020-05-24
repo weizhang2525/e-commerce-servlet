@@ -124,6 +124,7 @@ public class FormSubmission extends HttpServlet {
                 insertOrder(cid, formData.get("ccnum"), p.getPid(), quantity, p.getPrice()*quantity, currentTime, connection);
         }
         
+        response.sendRedirect("order_confirm.html");
     }
 
     /**

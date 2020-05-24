@@ -97,7 +97,9 @@ public class UserSessionTrackingServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+
             Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Nuance9?useSSL=false&serverTimezone=PST", "test", "test");
+
             Statement myStmt = myConn.createStatement();
             ResultSet myResult = myStmt.executeQuery("SELECT * from products WHERE pid='" + pid + "'");
 
