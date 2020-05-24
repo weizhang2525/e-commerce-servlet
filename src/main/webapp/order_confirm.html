@@ -17,6 +17,7 @@ and open the template in the editor.
     <script>
         $(document).ready(function(){
             $.get("OrderConfirm", function(data){
+                console.log(data);
                 var orderUI = $("#order");
                 var orderJSON = JSON.parse(data);
                 orderUI.append("<p class = 'secondelem'> Order Date: ");

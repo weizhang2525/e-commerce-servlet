@@ -77,15 +77,20 @@ public class OrderConfirm extends HttpServlet {
 
             // 3. Get last customer id
             ResultSet c = myStmt.executeQuery("SELECT MAX('cid') AS lastCustomer FROM orders");
+            c.next();
             int customer = c.getInt("lastCustomer");
+            out.println(customer);
             ResultSet order = myStmt.executeQuery("SELECT * FROM orders WHERE 'cid' =" + customer);
+            order.next();
              
             // 4. Get essential info first
+            out.println("Test 4");
             JSONObject orderdate = new JSONObject();
             orderdate.put("date", order.getString("order_date"));
             orderJson.put(orderdate);
 
             ResultSet cus = myStmt.executeQuery("SELECT * FROM customers WHERE 'cid' =" + customer);
+            cus.next();
             JSONObject customerinfo= new JSONObject();
             customerinfo.put("name",cus.getString("fname") + " " + cus.getString("lname"));
             customerinfo.put("email", cus.getString("email"));
@@ -95,6 +100,7 @@ public class OrderConfirm extends HttpServlet {
             orderJson.put(customerinfo);
 
             ResultSet cc = myStmt.executeQuery("SELECT * FROM creditcards WHERE 'cid' =" + customer);
+            cc.next();
             JSONObject creditcard = new JSONObject();
             creditcard.put("ccnum", cc.getString("ccnum"));
             creditcard.put("exp", cc.getString("expiration"));
@@ -108,6 +114,7 @@ public class OrderConfirm extends HttpServlet {
                 customerTotal += order.getInt("total");
                 String pid = order.getString("pid");
                 ResultSet product = myStmt.executeQuery("SELECT * FROM products WHERE 'pid' =" + pid);
+                product.next();
                 item.put("name", product.getString("pname"));
                 item.put("pid", pid);
                 item.put("quantity", order.getInt("quantity"));

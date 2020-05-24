@@ -16,6 +16,10 @@
         <servlet-name>UserSessionTrackingServlet</servlet-name>
         <servlet-class>UserSessionTrackingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderConfirm</servlet-name>
+        <servlet-class>OrderConfirm</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FormSubmission</servlet-name>
         <url-pattern>/FormSubmission</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>UserSessionTrackingServlet</servlet-name>
         <url-pattern>/UserSessionTrackingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderConfirm</servlet-name>
+        <url-pattern>/OrderConfirm</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
