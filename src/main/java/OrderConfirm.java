@@ -83,7 +83,8 @@ public class OrderConfirm extends HttpServlet {
            
             int customer = (Integer)(session.getAttribute("cid"));
             out.println(customer);
-            ResultSet order = myStmt.executeQuery("SELECT * FROM orders WHERE 'cid' =" + customer);
+            
+            ResultSet order = myStmt.executeQuery("SELECT * from orders WHERE cid='" + customer + "'");
             order.next();
              
             // 4. Get essential info first
@@ -92,9 +93,10 @@ public class OrderConfirm extends HttpServlet {
             orderdate.put("date", order.getString("order_date"));
             orderJson.put(orderdate);
 
-            ResultSet cus = myStmt.executeQuery("SELECT * FROM customers WHERE 'cid' =" + customer);
+            ResultSet cus = myStmt.executeQuery("SELECT * from customers WHERE cid='" + customer + "'");
             cus.next();
             JSONObject customerinfo= new JSONObject();
+            out.println("1");
             customerinfo.put("name",cus.getString("fname") + " " + cus.getString("lname"));
             customerinfo.put("email", cus.getString("email"));
             customerinfo.put("phone", cus.getString("phone"));
@@ -102,7 +104,8 @@ public class OrderConfirm extends HttpServlet {
             customerinfo.put("csz", cus.getString("city") + ", " + cus.getString("us_state") + " " + cus.getString("zip"));
             orderJson.put(customerinfo);
 
-            ResultSet cc = myStmt.executeQuery("SELECT * FROM creditcards WHERE 'cid' =" + customer);
+            ResultSet cc = myStmt.executeQuery("SELECT * from creditcards WHERE cid='" + customer + "'");
+            out.println("2");
             cc.next();
             JSONObject creditcard = new JSONObject();
             creditcard.put("ccnum", cc.getString("ccnum"));
@@ -110,19 +113,20 @@ public class OrderConfirm extends HttpServlet {
             orderJson.put(creditcard);
             
             // 5. Get product set
-            float customerTotal = 0;
-            while(order.next())
-            {
-                JSONObject item = new JSONObject();
-                customerTotal += order.getInt("total");
-                String pid = order.getString("pid");
-                ResultSet product = myStmt.executeQuery("SELECT * FROM products WHERE 'pid' =" + pid);
-                product.next();
-                item.put("name", product.getString("pname"));
-                item.put("pid", pid);
-                item.put("quantity", order.getInt("quantity"));
-                orderJson.put(item);
-            }
+            double customerTotal = (Double)session.getAttribute("cartTotal");
+//            while(order.next())
+//            {
+//                JSONObject item = new JSONObject();
+//                customerTotal += order.getInt("total");
+//                String pid = order.getString("pid");
+////                ResultSet product = myStmt.executeQuery("SELECT * from products WHERE pid='" + pid + "'");
+//                out.println("3");
+////                product.next();
+////                item.put("name", product.getString("pname"));
+//                item.put("pid", pid);
+//                item.put("quantity", order.getInt("quantity"));
+//                orderJson.put(item);
+//            }
             
             //6. Get total
             JSONObject total = new JSONObject();
