@@ -1,0 +1,8 @@
+CartSession.class
+Product.class
+FormSubmission.class
+UserSessionTrackingServlet.class
+com/mycompany/e/commerce/servlet/resources/JavaEE8Resource.class
+HomePageServlet.class
+productPage.class
+com/mycompany/e/commerce/servlet/JAXRSConfiguration.class
