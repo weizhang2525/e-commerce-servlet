@@ -101,6 +101,8 @@ public class FormSubmission extends HttpServlet {
         
         int cid = insertCustomer(formData.get("fname"), formData.get("lname"), formData.get("email"), formData.get("phone"), formData.get("address1"), formData.get("city"), formData.get("state"), formData.get("zip"), connection);
 //        out.println(cid);
+
+        
 //        
         insertCC(cid, formData.get("ccnum"), formData.get("cvv"), formData.get("expiration"), connection);
 
@@ -112,6 +114,9 @@ public class FormSubmission extends HttpServlet {
 //        }
        
         HttpSession session = request.getSession();
+        
+        session.setAttribute("cid", cid);
+        
         Map<Product, Integer> cart = (Map<Product, Integer>)session.getAttribute("cart");
         Iterator cartIterator = cart.entrySet().iterator();
         java.util.Date dt = new java.util.Date();

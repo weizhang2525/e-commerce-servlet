@@ -76,9 +76,12 @@ public class OrderConfirm extends HttpServlet {
             Statement myStmt = myConn.createStatement();
 
             // 3. Get last customer id
-            ResultSet c = myStmt.executeQuery("SELECT MAX('cid') AS lastCustomer FROM orders");
-            c.next();
-            int customer = c.getInt("lastCustomer");
+//            ResultSet c = myStmt.executeQuery("SELECT MAX('cid') AS lastCustomer FROM orders");
+//            c.next();
+
+            HttpSession session = request.getSession();
+           
+            int customer = (Integer)(session.getAttribute("cid"));
             out.println(customer);
             ResultSet order = myStmt.executeQuery("SELECT * FROM orders WHERE 'cid' =" + customer);
             order.next();
