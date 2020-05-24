@@ -1,6 +1,6 @@
 
 CREATE TABLE IF NOT EXISTS `nuance9`.`products` (
-  `pid` INT NOT NULL,
+  `pid` VARCHAR(20) NOT NULL,
   `pname` VARCHAR(45) NULL,
   `price` VARCHAR(45) NULL,
   `desc` VARCHAR(250) NULL,
