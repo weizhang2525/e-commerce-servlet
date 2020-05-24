@@ -57,7 +57,7 @@ and open the template in the editor.
 
                         <div class="form-group col-md-6">
                             <label for="phone">Phone Number</label>
-                            <input class="form-control" type="tel" id="phone" name="phone" placeholder="123-456-7890 or +1 123-456-7890" required>
+                            <input class="form-control" type="tel" id="phone" name="phone" placeholder="123-456-7890 or +1 123-456-7890" required pattern = "^(\+1\s)?\d{3}-\d{3}-\d{4}$">
                         </div>
 
                     </div>
@@ -65,7 +65,7 @@ and open the template in the editor.
                     <div class = "form-row">
                         <div class="form-group col-md-6">
                             <label for="address1">Address</label>
-                            <input class="form-control" type="text" id="address1" name="address1" placeholder="Street and number, P.O. box c/o" required>
+                            <input class="form-control" type="text" id="address1" name="address1" placeholder="Street and number, P.O. box c/o" required pattern = "^\s*\S+(?:\s+\S+){2}$">
                         </div>
                     </div>
 
