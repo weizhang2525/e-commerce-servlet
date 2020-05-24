@@ -82,13 +82,13 @@ public class OrderConfirm extends HttpServlet {
             HttpSession session = request.getSession();
            
             int customer = (Integer)(session.getAttribute("cid"));
-            out.println(customer);
+//            out.println(customer);
             
             ResultSet order = myStmt.executeQuery("SELECT * from orders WHERE cid='" + customer + "'");
             order.next();
              
             // 4. Get essential info first
-            out.println("Test 4");
+//            out.println("Test 4");
             JSONObject orderdate = new JSONObject();
             orderdate.put("date", order.getString("order_date"));
             orderJson.put(orderdate);
@@ -96,7 +96,7 @@ public class OrderConfirm extends HttpServlet {
             ResultSet cus = myStmt.executeQuery("SELECT * from customers WHERE cid='" + customer + "'");
             cus.next();
             JSONObject customerinfo= new JSONObject();
-            out.println("1");
+//            out.println("1");
             customerinfo.put("name",cus.getString("fname") + " " + cus.getString("lname"));
             customerinfo.put("email", cus.getString("email"));
             customerinfo.put("phone", cus.getString("phone"));
@@ -105,7 +105,7 @@ public class OrderConfirm extends HttpServlet {
             orderJson.put(customerinfo);
 
             ResultSet cc = myStmt.executeQuery("SELECT * from creditcards WHERE cid='" + customer + "'");
-            out.println("2");
+//            out.println("2");
             cc.next();
             JSONObject creditcard = new JSONObject();
             creditcard.put("ccnum", cc.getString("ccnum"));
