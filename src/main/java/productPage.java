@@ -471,10 +471,13 @@ out.println("<body id='body'>");
                            
         }
 
-        
-        out.println(session.getAttribute("prod"));
+        out.println("hello");
+        //out.println(session.getAttribute("prod"));
+
+        response.sendRedirect(request.getContextPath() + "/product-page.html");
       
     }
+
 
     /** 
      * Returns a short description of the servlet.

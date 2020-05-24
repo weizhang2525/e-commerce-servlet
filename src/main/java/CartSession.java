@@ -98,7 +98,7 @@ public class CartSession extends HttpServlet {
 //            double price = Double.valueOf(request.getParameter("price"));
             int quantity = Integer.valueOf(request.getParameter("quantity"));
             Product p1 = new Product("1A", 12.50, "Hello");
-////            Product p = new Product(pid, price, name);
+//            Product p = new Product(pid, price, name);
             addToCart(request, response, p1, quantity);
         }
         HttpSession session = request.getSession();        

@@ -25,14 +25,27 @@
             // APON PUT YOUR CODE HERE
             function handleCardClick() {
                 var pid = this.classList[0]
+                console.log(pid);
+//                $.ajax({
+//                type: 'POST',
+//                data: { pid: pid },
+//                url: 'UserSessionTrackingServlet',
+//                success: function(data){},
+//                error: function(){ alert("Error"); }
+//                });
+                
                 $.ajax({
                 type: 'POST',
-                data: { pid: pid },
-                url: 'UserSessionTrackingServlet',
-                success: function(data){},
+                data: { prod: pid },
+                url: 'productPage',
+                success: function(data){
+                    console.log(data);
+                },
                 error: function(){ alert("Error"); }
                 });
                 
+//                window.location.replace("product-page.html");
+                window.location.href = "product-page.html";
                 
             }
 
@@ -146,12 +159,7 @@
             <div class="row" id="products-container">
                 
                 
-                 <form action ="productPage" method="POST" >
-        
-                    enter the product : <input type="text" name="prod" id="prod">
-                    <input id = "process" type ="submit">
-        
-                </form>
+            
 
         <!-- [DON'T DELETE THIS, ITS A REFERNCE] ------------------
     
